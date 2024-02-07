@@ -89,15 +89,26 @@ function viewAllRoles() {
     });
 }
 
-// Function to view all employees
+// Function to view all employees and their roles
 function viewAllEmployees() {
-    const query = "SELECT * FROM employee";
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.table(res);
+    const query = `
+        SELECT *
+        FROM employee
+        LEFT JOIN role ON employee.role_id = role.id
+        LEFT JOIN department ON role.department_id = department.id; `;
+
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error('Error executing query:', error);
+            connection.end();
+            return;
+        }
+
+        console.table(results); // Display the results as a table
         start();
     });
 }
+
 
 // Function to add a department
 function addDepartment() {
