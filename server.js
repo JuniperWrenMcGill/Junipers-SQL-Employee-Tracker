@@ -199,7 +199,7 @@ function addEmployee() {
                 // Insert the new employee into the database
                 const sql = "INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)";
                 const values = [answers.firstName, answers.lastName, answers.roleId];
-                
+
                 connection.query(sql, values, (err, res) => {
                     if (err) throw err;
 
@@ -212,7 +212,44 @@ function addEmployee() {
 
 // Function to update an employee role
 function updateEmployeeRole() {
-    // add functionality here
+    // Retrieve employees and roles from the database
+    connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS employee_name FROM employee", (err, employees) => {
+        if (err) throw err;
+
+        connection.query("SELECT id, title FROM role", (err, roles) => {
+            if (err) throw err;
+
+            // Prompt user to select an employee and a new role
+            inquirer
+                .prompt([
+                    {
+                        type: "list",
+                        name: "employeeId",
+                        message: "Select the employee to update:",
+                        choices: employees.map(employee => ({ name: employee.employee_name, value: employee.id })),
+                    },
+                    {
+                        type: "list",
+                        name: "roleId",
+                        message: "Select the employee's new role:",
+                        choices: roles.map(role => ({ name: role.title, value: role.id })),
+                    },
+                ])
+                .then((answers) => {
+                    // Update the employee's role in the database
+                    const sql = "UPDATE employee SET role_id = ? WHERE id = ?";
+                    const values = [answers.roleId, answers.employeeId];
+
+                    connection.query(sql, values, (err, res) => {
+                        if (err) throw err;
+
+                        console.log(`Updated employee's role in the database!`);
+                        start();
+                    });
+                });
+        });
+    });
 }
+
 
 // Additional functions for bonus functionalities can be added here
