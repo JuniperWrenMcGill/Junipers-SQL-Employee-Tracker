@@ -171,7 +171,43 @@ function addRole() {
 
 // Function to add an employee
 function addEmployee() {
-    // add functionality here
+    // Retrieve roles from the database
+    connection.query("SELECT id, title FROM role", (err, roles) => {
+        if (err) throw err;
+
+        // Prompt user for employee information
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "firstName",
+                    message: "Enter the employee's first name:",
+                },
+                {
+                    type: "input",
+                    name: "lastName",
+                    message: "Enter the employee's last name:",
+                },
+                {
+                    type: "list",
+                    name: "roleId",
+                    message: "Select the employee's role:",
+                    choices: roles.map(role => ({ name: role.title, value: role.id })),
+                },
+            ])
+            .then((answers) => {
+                // Insert the new employee into the database
+                const sql = "INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)";
+                const values = [answers.firstName, answers.lastName, answers.roleId];
+                
+                connection.query(sql, values, (err, res) => {
+                    if (err) throw err;
+
+                    console.log(`Added employee ${answers.firstName} ${answers.lastName} to the database!`);
+                    start();
+                });
+            });
+    });
 }
 
 // Function to update an employee role
