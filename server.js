@@ -119,8 +119,55 @@ function addDepartment() {
 
 // Function to add a role
 function addRole() {
-    // add functionality here
+    // Retrieve list of departments from the database
+    connection.query("SELECT * FROM department", (err, res) => {
+        if (err) throw err;
+
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "title",
+                    message: "Enter the title of the new role:",
+                },
+                {
+                    type: "input",
+                    name: "salary",
+                    message: "Enter the salary of the new role:",
+                },
+                {
+                    type: "list",
+                    name: "department",
+                    message: "Select the department for the new role:",
+                    choices: res.map((department) => department.name),
+                },
+            ])
+            .then((answers) => {
+                const department = res.find(
+                    (department) => department.name === answers.department
+                );
+
+                const query = "INSERT INTO role SET ?";
+                connection.query(
+                    query,
+                    {
+                        title: answers.title,
+                        salary: answers.salary,
+                        department_id: department.id,
+                    },
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log(
+                            `Added role ${answers.title} with salary ${answers.salary} to the ${answers.department} department in the database!`
+                        );
+                        // restart the application
+                        start();
+                    }
+                );
+            });
+    });
 }
+
 
 // Function to add an employee
 function addEmployee() {
