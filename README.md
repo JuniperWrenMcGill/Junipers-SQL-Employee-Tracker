@@ -21,9 +21,6 @@ Before running this application be sure to follow the following instructions.
 
 [Video Demonstration: How to install and use this application (run time 8:19)] (https://drive.google.com/file/d/10J4J7vxK81acIv7DNott7O7z8J5tHgF4/view)
 
-## Credits
-This project includes starter code provided by UNCC Full-Stack Bootcamp.
-
 ## License
 This project is licensed under the MIT license. 
 
