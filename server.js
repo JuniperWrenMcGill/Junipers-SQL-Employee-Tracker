@@ -33,7 +33,6 @@ function start() {
                 "Add a role",
                 "Add an employee",
                 "Update an employee role",
-                // Add more choices if needed/wanted 
                 "Exit",
             ],
         })
@@ -60,7 +59,6 @@ function start() {
                 case "Update an employee role":
                     updateEmployeeRole();
                     break;
-                // Add cases for bonus functionalities as needed
                 case "Exit":
                     connection.end();
                     console.log("Goodbye!");
@@ -187,40 +185,52 @@ function addEmployee() {
     connection.query("SELECT id, title FROM role", (err, roles) => {
         if (err) throw err;
 
-        // Prompt user for employee information
-        inquirer
-            .prompt([
-                {
-                    type: "input",
-                    name: "firstName",
-                    message: "Enter the employee's first name:",
-                },
-                {
-                    type: "input",
-                    name: "lastName",
-                    message: "Enter the employee's last name:",
-                },
-                {
-                    type: "list",
-                    name: "roleId",
-                    message: "Select the employee's role:",
-                    choices: roles.map(role => ({ name: role.title, value: role.id })),
-                },
-            ])
-            .then((answers) => {
-                // Insert the new employee into the database
-                const sql = "INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)";
-                const values = [answers.firstName, answers.lastName, answers.roleId];
+        // Retrieve employees for manager selection
+        connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS manager_name FROM employee", (err, managers) => {
+            if (err) throw err;
 
-                connection.query(sql, values, (err, res) => {
-                    if (err) throw err;
+            // Prompt user for employee information
+            inquirer
+                .prompt([
+                    {
+                        type: "input",
+                        name: "firstName",
+                        message: "Enter the employee's first name:",
+                    },
+                    {
+                        type: "input",
+                        name: "lastName",
+                        message: "Enter the employee's last name:",
+                    },
+                    {
+                        type: "list",
+                        name: "roleId",
+                        message: "Select the employee's role:",
+                        choices: roles.map((role) => ({ name: role.title, value: role.id })),
+                    },
+                    {
+                        type: "list",
+                        name: "managerId",
+                        message: "Select the employee's manager:",
+                        choices: [...managers.map((manager) => ({ name: manager.manager_name, value: manager.id })), { name: "None", value: null }],
+                    },
+                ])
+                .then((answers) => {
+                    // Insert the new employee into the database
+                    const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+                    const values = [answers.firstName, answers.lastName, answers.roleId, answers.managerId];
 
-                    console.log(`Added employee ${answers.firstName} ${answers.lastName} to the database!`);
-                    start();
+                    connection.query(sql, values, (err, res) => {
+                        if (err) throw err;
+
+                        console.log(`Added employee ${answers.firstName} ${answers.lastName} to the database!`);
+                        start();
+                    });
                 });
-            });
+        });
     });
 }
+
 
 // Function to update an employee role
 function updateEmployeeRole() {
@@ -262,6 +272,3 @@ function updateEmployeeRole() {
         });
     });
 }
-
-
-// Additional functions for bonus functionalities can be added here
