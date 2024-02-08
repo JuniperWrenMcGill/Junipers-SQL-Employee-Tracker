@@ -12,12 +12,12 @@ Before running this application be sure to follow the following instructions.
 4. Open integrated terminal.
 5. Run NPM i in command line.
 6. Install inquirer 8.2.4 by running the following command in the integrated terminal: [ npm i inquirer@8.2.4 ]
-7. Set up local db
+7. Set up local db with Workbench
 8. Seed db if desired 
 9. Run application by running the following command in the integrated terminal :[ node server.js ]
-10. Navigate the tracker by arrows. 
+10. Navigate the tracker by arrows an enjoy!
 
-[Video Demonstration: How to install and use this application (run time 4:46)](https://drive.google.com/file/d/1ITeqT2yn9MVW296IuBpRRbtV7zGEr-ZV/view)
+[Video Demonstration: How to install and use this application (run time 8:19)](git@github.com:JuniperWrenMcGill/Junipers-SQL-Employee-Tracker.git)
 
 ## Credits
 This project includes starter code provided by UNCC Full-Stack Bootcamp.
