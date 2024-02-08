@@ -1,10 +1,7 @@
 # Junipers SQL Employee Tracker
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
 ## Description
- A well-documented README is crucial for users to understand the functionality, installation steps, and usage of your CLI tool. This project streamlines the process of creating a README file. Users can us this program to create unique README.md files by answering the command line prompts. 
-
-![screanshot of application in use](imgs/finished.png)
-
+Efficiently manage your team with Juniper's SQL Employee Tracker. A straightforward solution for organizing and tracking employee information using SQL.
 
 ## Installation and Usage 
 
