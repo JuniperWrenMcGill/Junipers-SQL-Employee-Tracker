@@ -12,8 +12,10 @@ Before running this application be sure to follow the following instructions.
 4. Open integrated terminal.
 5. Run NPM i in command line.
 6. Install inquirer 8.2.4 by running the following command in the integrated terminal: [ npm i inquirer@8.2.4 ]
-7. Run application by running the following command in the integrated terminal :[ node server.js ]
-8. Navigate the tracker by arrows. 
+7. Set up local db
+8. Seed db if desired 
+9. Run application by running the following command in the integrated terminal :[ node server.js ]
+10. Navigate the tracker by arrows. 
 
 [Video Demonstration: How to install and use this application (run time 4:46)](https://drive.google.com/file/d/1ITeqT2yn9MVW296IuBpRRbtV7zGEr-ZV/view)
 
