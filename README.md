@@ -3,6 +3,8 @@
 ## Description
 Efficiently manage your team with Juniper's SQL Employee Tracker. A straightforward solution for organizing and tracking employee information using SQL.
 
+![screen shot of sql tracker](img/finished.png)
+
 ## Installation and Usage 
 
 Before running this application be sure to follow the following instructions. 
